@@ -27,11 +27,18 @@ public class UserRoleController {
 	private UserRoleService userService;
 	
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	private String addUserSubmit(@ModelAttribute @Valid UserRoleModel user, BindingResult result) {
-		if (result.hasErrors()) {
-			return "home";
+	private String addUserSubmit(@ModelAttribute UserRoleModel user, Model model) {
+		String msg = "";
+		if (validatePassword(user.getPassword())) {
+			userService.addUser(user);
+			msg = "user berhasil dibuat";
 		}
-		userService.addUser(user);
+		else {
+			msg = "password baru anda belum sesuai ketentuan: lebih dari 8 karakter, mengandung minimal 1 huruf dan 1 angka";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("user",user);
+		
 		return "home";
 	}
 	

@@ -1,13 +1,17 @@
 package com.apap.tutorial8.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.apap.tutorial8.model.UserRoleModel;
 
 @Controller
 public class PageController {
 	@RequestMapping("/")
-	public String home() {
+	public String home(Model model) {
+		UserRoleModel user = new UserRoleModel();
+		model.addAttribute("user",user);
 		return "home";
 	}
 	
